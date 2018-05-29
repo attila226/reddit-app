@@ -47,9 +47,6 @@ class App extends Component {
           before: results.data.before
         });
       }
-     
-      console.log('before', results.data.before);
-      console.log('after', results.data.after);
 
       let listData = results.data.children.map((post) => {
         return post.data;
@@ -62,8 +59,9 @@ class App extends Component {
   }
 
   getData(){
+    const after = (this.state.prevSub === this.state.sub) ? this.state.after: null;
     const urlPrefix = 'https://www.reddit.com/';
-    const url = `${urlPrefix}r/${this.state.sub}.json?count=25&&after=${this.state.after}`;
+    const url = `${urlPrefix}r/${this.state.sub}.json?count=25&after=${after}`;
 
     return fetch(url)
       .then(response => {
