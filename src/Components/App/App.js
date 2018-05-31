@@ -21,15 +21,11 @@ class App extends Component {
 
   updateSub(evt){
     this.setState({
-      prevSub: this.state.sub,
       sub: evt.target.value
     });
   }
 
   searchSub(){
-    this.setState({
-      after: null
-    });
 
     this.getData()
     .then(results => {
@@ -59,6 +55,12 @@ class App extends Component {
   }
 
   getData(){
+    if(this.state.prevSub !== this.state.sub){
+      this.setState({
+        prevSub: this.state.sub
+      });
+    }
+
     const after = (this.state.prevSub === this.state.sub) ? this.state.after: null;
     const urlPrefix = 'https://www.reddit.com/';
     const url = `${urlPrefix}r/${this.state.sub}.json?count=25&after=${after}`;
